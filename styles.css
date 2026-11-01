@@ -236,3 +236,16 @@ table.tbl td.r,table.tbl th.r{text-align:right}
 .statbox b{font-size:22px;display:block;font-variant-numeric:tabular-nums}
 .statbox small{color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
 .spark{width:100%;height:60px}
+
+/* Créditos e ajustes da edição brasileira. */
+.credits { text-align:center; padding:22px 16px 100px; color:var(--mut); font-size:12px; line-height:1.7; }
+.credits a { color:inherit; text-decoration:underline; }
+@media (max-width: 480px) {
+  .goat-marks { flex-wrap:wrap; justify-content:center; gap:6px 12px; }
+  .grid2 > *, .card, .who { min-width:0; }
+  .continue-bar .btn { min-width:0; width:100%; max-width:420px; }
+  .scoreboard { gap:8px; }
+  .scoreboard .score { min-width:90px; font-size:34px; }
+  .scoreboard .team { overflow-wrap:anywhere; }
+  .credits { overflow-wrap:anywhere; }
+}

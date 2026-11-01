@@ -2,7 +2,7 @@
 /* ===== SAVES & BOOT ===== */
 const SAVE_SLOTS = 5;
 const Saves = {
-  key: i => "career_legend_slot_" + i,
+  key: i => "career_legend_brasil_slot_" + i,
   save(i, state) {
     try { localStorage.setItem(this.key(i), JSON.stringify(state)); } catch (e) { console.warn("save failed", e); }
   },

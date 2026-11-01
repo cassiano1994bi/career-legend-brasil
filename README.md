@@ -1,71 +1,54 @@
-# ⚽ Career Legend — Road to GOAT
+# ⚽ Career Legend Brasil
 
-A free, open-source **soccer/football career simulator** that runs entirely in your browser. No install, no account, no server — just open it and play.
+Edição independente em **português brasileiro** de [Career Legend](https://github.com/RandomProjects1234/career-legend), de RandomProjects1234 e colaboradores. Simulador de carreira no futebol, da base à aposentadoria, inteiramente no navegador.
 
-You start at **14 years old** in a youth academy and live an entire career: earn your first professional contract, fight for minutes, move clubs, play for your country, win the Ballon d'Or… or grind out a living in the third division. Every career is different.
+**Publicação no GitHub Pages pendente:** o ambiente conectado não recebeu permissão para criar o repositório `cassiano1994bi/career-legend-brasil`. Não há endereço publicado e verificado nesta entrega local.
 
-**▶️ [Play it now in your browser](https://randomprojects1234.github.io/career-legend/)** — free, no install, no account.
+## Jogar localmente
 
----
+Não é necessário compilar nem instalar dependências para jogar:
 
-## Features
-
-- **470+ real clubs** — top 3 divisions of England, Spain, Italy, Germany & France, plus the Eredivisie, Liga Portugal, the top 2 divisions of Argentina & Brazil, and all 30 MLS teams. Promotion and relegation run across the whole world every season.
-- **68 national teams** with World Cups, Euros, Copa América, AFCON, Asian Cup and Gold Cup (U17, U20 and senior levels).
-- **Interactive matches** — a live ticker plus "key moment" decisions where you choose what to do, with odds based on your attributes and form.
-- **53 trainable skill moves** — Rainbow Flick, Rabona, Air Elastico, Panenka and more. Train each one individually; the higher the level, the more reliably it works in matches.
-- **48 match scenarios** that rotate so games stay fresh, plus real penalty shootouts in knockouts (you take a kick yourself).
-- **10,629 unique press conferences** with answers tailored to each question.
-- **20,000 unique Instagram DMs** from teammates, your agent, the manager, family, journalists, rivals and brands — plus 10,000 fan messages.
-- **101 brand endorsements** (McDonald's, Costco, Uber Eats, Apple, Ferrari…), boot sponsors, agents and a shop to spend it all in.
-- **A life outside football** — fan love, social media, morale, injuries, and 100 unforgettable bad life events that genuinely affect how you play.
-- **4 difficulties**, from a relaxed Wonderkid run to the brutal Road to GOAT.
-- **5 career slots**, autosaved every week, with a full career retrospective and a GOAT-o-meter legacy rank when you retire.
-
-## Running it locally
-
-It's a static site — no build step and no dependencies. Any static file server works:
-
-```bash
+```sh
 python -m http.server 3999
 ```
 
-Then open <http://localhost:3999>. (Windows users can double-click `Start Soccer Career.bat`.)
+Abra `http://localhost:3999`. O jogo também pode ser aberto pelo arquivo `index.html`, mas o servidor local é recomendado para um salvamento consistente.
 
-Opening `index.html` directly via `file://` also mostly works, but a local server is recommended.
+## Tradução e compatibilidade
 
-## Project layout
+- Interface, criação de jogador, notícias, treinos, partidas, contratos, transferências, entrevistas, mensagens, vida pessoal, premiações e aposentadoria recebem tradução local.
+- O dicionário `pt-BR.json` tem a fonte das traduções; `locale-data.js` contém a mesma tabela para funcionar inclusive sem conexão. `locale.js` traduz apenas a apresentação, preservando os identificadores internos e os textos originais salvos.
+- A tradução inicial foi auxiliada por tradução automática, com revisão de interface e terminologia do futebol. A grande variedade de textos narrativos pode se beneficiar de revisão editorial adicional.
+- Nomes de jogadores, clubes e marcas são preservados. A moeda original continua sendo o euro.
+- As regras, probabilidades, progressão e dados da simulação foram mantidos.
+- Cinco espaços de carreira, salvamento automático semanal e migração do formato original permanecem disponíveis. Os dados ficam neste navegador e dispositivo, em `localStorage`, sob `career_legend_brasil_slot_1` até `career_legend_brasil_slot_5`. Isso evita sobrescrever o jogo original ou outros projetos do mesmo domínio. Salvos de outro site não são transferidos automaticamente entre domínios.
 
-| File | What's in it |
-| --- | --- |
-| `index.html` | Entry point and script order |
-| `styles.css` | All styling |
-| `util.js` | Math, formatting and random helpers |
-| `data_clubs.js` | Every league and club |
-| `data_world.js` | Nations, academies, positions, difficulties, base match moments |
-| `data_press.js` | Press conference system |
-| `data_skills.js` | Skill moves + extra match moments |
-| `data_brands.js` | Brand endorsements |
-| `data_dms.js` | Instagram DM inbox and fan mail |
-| `data_badevents.js` | Bad life events and grief |
-| `player.js` | Attributes, growth, training, market value |
-| `engine.js` | Match engine, shootouts, fixtures, world simulation |
-| `career.js` | Season flow, transfers, contracts, awards, save migration |
-| `ui.js` | All rendering and interaction |
-| `main.js` | Save system and boot |
+## Testes
 
-## Saves
+O jogo não depende de Node.js. Ele é usado apenas nos testes:
 
-Careers are stored in your browser's `localStorage`, so they live on the device you play on and aren't uploaded anywhere. Saves are migrated forward automatically when the game updates, so updating never costs you progress.
+```sh
+npm ci
+npx playwright install chromium
+npm test
+```
 
-> **Note on updates:** script tags in `index.html` carry a `?v=N` cache-busting stamp. If you fork this and ship a change, bump that number so players don't run stale code.
+- Regressão contra o commit original: cinco temporadas completas para um atacante e um goleiro, com a mesma sequência aleatória. Comparação de todos os dados do jogo e salvamento, exceto notícias/notificações que têm formatação localizada.
+- Navegador Chromium: criação, simulação, recarregamento do salvamento, isolamento de dados, contratos, transferência, mensagens, treino, redes sociais e partidas interativas.
+- Telas em 1280, 390 e 320 pixels; caminhos relativos sob `/career-legend-brasil/`, como no GitHub Pages.
 
-## Contributing
+Consulte [TESTES.md](TESTES.md) e as capturas em `artifacts/`.
 
-Issues and pull requests are welcome — new clubs, new match scenarios, balance tweaks, bug fixes, translations, anything. The codebase is plain vanilla JavaScript with no build tooling, so you can edit a file and hit refresh.
+## Publicar no GitHub Pages
 
-## License
+Use um repositório **novo e separado** chamado `career-legend-brasil`. Depois de enviar os arquivos para `main`, em **Settings → Pages**, selecione **Deploy from a branch → main → / (root)**. O arquivo `.nojekyll` já está incluído. Não é necessário processo de build.
 
-[MIT](LICENSE) — free to use, modify and distribute.
+O endereço esperado após publicação é `https://cassiano1994bi.github.io/career-legend-brasil/`; isso é uma previsão do endereço, não uma confirmação de que ele esteja publicado.
 
-Club, competition and brand names are referenced for identification only; this is a non-commercial fan project and is not affiliated with or endorsed by any club, league or company.
+## Origem, licença e créditos
+
+Base: `RandomProjects1234/career-legend`, commit `b04970d573a12c365674e725e5db37af7ba1f99a`.
+
+**MIT License — Copyright (c) 2026 Career Legend contributors.** O arquivo [LICENSE](LICENSE) original foi preservado integralmente. A licença permite uso, cópia, modificação e distribuição, exigindo a manutenção do aviso de copyright e da permissão. O README original está em [README.upstream.md](README.upstream.md).
+
+Nomes de clubes, competições e marcas são usados para identificação. Este é um projeto de fãs, sem afiliação ou endosso de clubes, ligas ou empresas.

@@ -188,7 +188,7 @@ UI.renderHub = function () {
       <div class="chip"><b>${fmtM(st.money)}</b><small>Bank</small></div>
       <div class="chip"><b>${fmtM(val)}</b><small>Value</small></div>
       <div class="chip"><b>${p.energy < 35 ? "🪫" : "⚡"} ${Math.round(p.energy)}</b><small>Energy</small></div>
-      <div class="chip"><b>${formWord(p.form)} ${p.form.toFixed(1)}</b><small>Form</small></div>
+      <div class="chip"><b>${formWord(p.form)} ${p.form.toFixed(1).replace(".", ",")}</b><small>Form</small></div>
       <div class="chip"><b>${moraleWord(p.morale).split(" ")[0]}</b><small>Morale</small></div>
       ${p.injury > 0 ? `<div class="chip" style="border-color:var(--red)"><b class="red">🤕 ${p.injury}w</b><small>${esc(p.injuryName || "Injured")}</small></div>` : ""}
       ${st.grief && st.grief.weeks > 0 ? `<div class="chip" style="border-color:var(--pur)"><b style="color:var(--pur)">${esc(st.grief.label)}</b><small>${st.grief.weeks}w to heal</small></div>` : ""}
@@ -309,7 +309,7 @@ function tabMatches(st) {
   const S = st.season;
   const res = st.results.slice(-15).reverse().map(r => {
     const cls = r.out === "W" ? "grn" : r.out === "L" ? "red" : "";
-    const badge = r.played ? `<span class="rating-badge ${ratingClass(r.rating)}" style="min-width:38px;height:26px;font-size:13px">${r.rating.toFixed(1)}</span>` : `<span class="pill dim">${r.sel === "out" ? "not selected" : r.sel === "injured" ? "injured" : r.sel === "banned" ? "suspended" : "unused sub"}</span>`;
+    const badge = r.played ? `<span class="rating-badge ${ratingClass(r.rating)}" style="min-width:38px;height:26px;font-size:13px">${r.rating.toFixed(1).replace(".", ",")}</span>` : `<span class="pill dim">${r.sel === "out" ? "not selected" : r.sel === "injured" ? "injured" : r.sel === "banned" ? "suspended" : "unused sub"}</span>`;
     return `<tr><td class="dim">Wk${r.wk}</td><td>${esc(r.comp)}</td><td>${r.home ? "vs" : "@"} ${esc(r.opp)}</td><td class="r ${cls}" style="font-weight:800">${r.out} ${r.score}</td><td class="r">${r.goals ? "⚽" + r.goals : ""}${r.assists ? " 🅰" + r.assists : ""}</td><td class="r">${badge}</td></tr>`;
   }).join("");
   let tableHtml = "";
@@ -349,7 +349,7 @@ function tabStats(st) {
     <div class="attr-row"><span class="lbl">${esc(attrLabel(p, k))}</span>
     ${pctBar(p.attrs[k], 99, p.attrs[k] >= 80 ? "gold" : "")}
     <span class="val">${Math.round(p.attrs[k])}</span></div>`).join("");
-  const statRows = Object.entries(st.stats).map(([k, b]) => `<tr><td>${esc(compDisplay(k))}</td><td class="r">${b.app}</td><td class="r">${b.gls}</td><td class="r">${b.ast}</td><td class="r">${b.app ? (b.ratSum / b.app).toFixed(2) : "—"}</td><td class="r">${b.motm}</td></tr>`).join("");
+  const statRows = Object.entries(st.stats).map(([k, b]) => `<tr><td>${esc(compDisplay(k))}</td><td class="r">${b.app}</td><td class="r">${b.gls}</td><td class="r">${b.ast}</td><td class="r">${b.app ? (b.ratSum / b.app).toFixed(2).replace(".", ",") : "—"}</td><td class="r">${b.motm}</td></tr>`).join("");
   const seasonRows = st.career.seasons.slice(-12).reverse().map(s => `<tr><td>${esc(s.season)}</td><td>${esc(s.club)}</td><td class="dim">${esc(s.league)}</td><td class="r">${s.pos ? ordinal(s.pos) : "—"}</td><td class="r">${s.app}</td><td class="r">${s.gls}</td><td class="r">${s.ast}</td><td class="r">${s.avg || "—"}</td></tr>`).join("");
   return `
   <div class="row">
@@ -495,7 +495,7 @@ function tabDMs(st) {
   return `
   <div class="card" style="margin-bottom:14px">
     <div class="spread"><h3 style="margin:0">📱 Direct messages</h3>
-    <small class="dim">${DM_TOTAL.toLocaleString()} unique DMs · 3 replies each · ${FANMSG_TOTAL.toLocaleString()} fan messages · ${st.dmReplies || 0} replied</small></div>
+    <small class="dim">${DM_TOTAL.toLocaleString("pt-BR")} unique DMs · 3 replies each · ${FANMSG_TOTAL.toLocaleString("pt-BR")} fan messages · ${st.dmReplies || 0} replied</small></div>
   </div>
   <div class="row">
     <div class="card" style="flex:1.4">
@@ -560,7 +560,7 @@ function tabLife(st) {
       <div class="kv" style="margin-top:10px"><span>Fan club size</span><b>${fmtNum(fanClub)}</b></div>
       <div class="kv"><span>Shirt-sale income</span><b>${shirtWk ? fmtM(shirtWk) + "/wk" : "— (pros only)"}</b></div>
       <div class="kv"><span>Total posts made</span><b>${F.posts || 0}</b></div>
-      <div class="kv"><span>Press conferences faced</span><b>${(st.pressCount || 0).toLocaleString()} / ${PRESS_TOTAL.toLocaleString()}</b></div>
+      <div class="kv"><span>Press conferences faced</span><b>${(st.pressCount || 0).toLocaleString("pt-BR")} / ${PRESS_TOTAL.toLocaleString("pt-BR")}</b></div>
       <div class="muted" style="font-size:11px;margin-top:8px">High fan love = weekly morale boost + bigger sponsor payouts. Win, score, post, and give good pressers to keep them singing.</div>
       <hr class="sep">
       <h3>📱 Post to social media ${postedThisWeek ? '<span class="pill dim">posted this week</span>' : '<span class="pill grn">READY</span>'}</h3>
@@ -797,7 +797,7 @@ UI.mEnd = function (res) {
           ${res.card === "y" ? " · 🟨 booked" : res.card === "r" ? " · 🟥 SENT OFF" : ""}
           ${res.injured ? ` · <span class="red">🤕 ${esc(res.injured)} (${st.player.injury}w)</span>` : ""}
         </div></div>
-        <div class="rating-badge ${ratingClass(res.rating)}">${res.rating.toFixed(1)}</div>
+        <div class="rating-badge ${ratingClass(res.rating)}">${res.rating.toFixed(1).replace(".", ",")}</div>
       </div>
       <div class="center" style="margin-top:14px"><button class="btn primary big" id="mDone">Continue</button></div>`;
     document.getElementById("mDone").onclick = () => { closeModal(); resolve(); };
@@ -812,7 +812,7 @@ UI.settingsModal = function () {
     <div class="comp-tag">⚙️ Settings</div>
     <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">
       <label class="spread" style="cursor:pointer;font-size:14px">
-        <span>🎙️ <b>Press conferences</b><br><small class="muted">Post-match media questions. ${PRESS_TOTAL.toLocaleString()} unique conferences in the game — you've faced ${(st.pressCount || 0).toLocaleString()}.</small></span>
+        <span>🎙️ <b>Press conferences</b><br><small class="muted">Post-match media questions. ${PRESS_TOTAL.toLocaleString("pt-BR")} unique conferences in the game — you've faced ${(st.pressCount || 0).toLocaleString("pt-BR")}.</small></span>
         <input type="checkbox" ${S.pressConf !== false ? "checked" : ""} onchange="UI.setSetting('pressConf', this.checked)" style="width:20px;height:20px">
       </label>
       <label class="spread" style="cursor:pointer;font-size:14px">

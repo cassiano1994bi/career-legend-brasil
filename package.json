@@ -1,0 +1,13 @@
+{
+  "name": "career-legend-brasil",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Career Legend em português brasileiro",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/engine-regression.cjs && node tests/browser.cjs",
+    "test:engine": "node tests/engine-regression.cjs",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": { "playwright": "1.64.1" }
+}

@@ -30,21 +30,18 @@ const deepClone = o => JSON.parse(JSON.stringify(o));
 const fmtM = n => {
   const neg = n < 0 ? "-" : "";
   n = Math.abs(n);
-  if (n >= 1e9) return neg + "€" + (n / 1e9).toFixed(2) + "B";
-  if (n >= 1e6) return neg + "€" + (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + "M";
-  if (n >= 1e3) return neg + "€" + (n / 1e3).toFixed(0) + "K";
+  if (n >= 1e9) return neg + "€" + (n / 1e9).toFixed(2).replace(".", ",") + "B";
+  if (n >= 1e6) return neg + "€" + (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(".", ",") + "M";
+  if (n >= 1e3) return neg + "€" + (n / 1e3).toFixed(0).replace(".", ",") + "K";
   return neg + "€" + Math.round(n);
 };
 const fmtNum = n => {
-  if (n >= 1e9) return (n / 1e9).toFixed(1) + "B";
-  if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
-  if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+  if (n >= 1e9) return (n / 1e9).toFixed(1).replace(".", ",") + "B";
+  if (n >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + "M";
+  if (n >= 1e3) return (n / 1e3).toFixed(1).replace(".", ",") + "K";
   return "" + Math.round(n);
 };
-const ordinal = n => {
-  const s = ["th", "st", "nd", "rd"], v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-};
+const ordinal = n => n + "º";
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 /* week (1-48) → month label */
